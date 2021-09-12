@@ -3,7 +3,7 @@ const User = require("../models/User");
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 
-//REGISTER
+//Sign up
 router.post("/signup", async (req, res) => {
   const newUser = new User({
     username: req.body.username,
@@ -15,13 +15,13 @@ router.post("/signup", async (req, res) => {
   try {
     const user = await newUser.save();
     res.status(201).json(user);
-  } catch (err) {
-    res.status(500).json(err);
+  } catch (error) {
+    res.status(500).json(error);
   }
 });
     
 
-//LOGIN
+//Login 
 router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -42,8 +42,8 @@ router.post("/login", async (req, res) => {
     const { password, ...info } = user._doc;
 
     res.status(200).json({ ...info, accessToken });
-  } catch (err) {
-    res.status(500).json(err);
+  } catch (error) {
+    res.status(500).json(error);
   }
 });
 
