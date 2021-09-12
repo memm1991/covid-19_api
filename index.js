@@ -6,6 +6,7 @@ const cors = require('cors')
 const authRoute = require("./routes/auth");
 const verify = require('./middlewareToken')
 const syncRoute=require('./routes/sync')
+const statisticsRoute=require('./routes/statistics')
 dotenv.config();
 
 mongoose
@@ -24,6 +25,7 @@ app.use(cors())
 
 app.use('/auth',authRoute)
 app.use('/sync', syncRoute)
+app.use('/statistics',statisticsRoute)
 
 app.listen(3001,()=>{
     console.log('App Listening at 3001')
