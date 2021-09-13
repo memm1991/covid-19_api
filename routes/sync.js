@@ -7,7 +7,7 @@ const options = {
     url: 'https://covid-193.p.rapidapi.com/statistics',
     headers: {
       'x-rapidapi-host': 'covid-193.p.rapidapi.com',
-      'x-rapidapi-key': '039b9fc852msh1a72a12be5c209ep133c2cjsn2fdeadcde22a'
+      'x-rapidapi-key': process.env.KEY_VALUE
     }
   };
  
