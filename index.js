@@ -7,6 +7,7 @@ const authRoute = require("./routes/auth");
 const verify = require('./middlewareToken')
 const syncRoute=require('./routes/sync')
 const statisticsRoute=require('./routes/statistics')
+const morgan = require('morgan');
 dotenv.config();
 
 mongoose
@@ -22,10 +23,11 @@ mongoose
 
 app.use(express.json())
 app.use(cors())
+app.use(morgan('dev'));
 
 app.use('/auth',authRoute)
-app.use('/sync', syncRoute)
-app.use('/statistics',statisticsRoute)
+app.use('/sync',verify, syncRoute)
+app.use('/statistics', verify, statisticsRoute)
 
 app.listen(3001,()=>{
     console.log('App Listening at 3001')
