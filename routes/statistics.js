@@ -6,14 +6,29 @@ const Statistics = require('../models/statistics')
 
 router.get('/',async(req,res)=>{
     try {
-        const data = await Statistics.find()
+        let data = await Statistics.find()
+        if(req.query.search){
+            const search= data.filter(country=> country.continent===req.query.search)
+            return res.status(200).json(search)
+        }
+        if(req.query.name){
+            const country= data.find(el=>el.country.toLowerCase()===req.query.toLowerCase())
+            if(country){
+                return res.status(200).json(country)
+            }
+            else{
+                return res.status(200).send(false)
+            }
+        }
         res.status(200).json(data)
     } catch (error) {
         res.status(500).json(error)
     }
+    
+    })
 
+        
 
-})
 
 router.get('/:countryId',async(req,res)=>{
     try {
@@ -40,10 +55,10 @@ router.post('/',async(req,res)=>{
         }
         //here we calculate the total deaths by adding new deaths
         if(!countryObject.deaths.total){
-             deathsTotal= countryObject.deaths.total+ req.body.deaths.new
+             deathsTotal= 0+ req.body.deaths.new
         }
         else{
-            countryObject.cases.total + req.body.deaths.new
+           deathsTotal= countryObject.deaths.total + req.body.deaths.new
         }
         
         const{country,...info}=req.body
@@ -61,7 +76,7 @@ router.post('/',async(req,res)=>{
         {
           $set: updateData,
         },
-        { new: true }
+        
       );
   res.status(200).json(response)
 } catch (error) {
