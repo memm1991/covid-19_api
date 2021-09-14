@@ -26,8 +26,8 @@ app.use(cors())
 app.use(morgan('dev'));
 
 app.use('/auth',authRoute)
-app.use('/sync',verify, syncRoute)
-app.use('/statistics', verify, statisticsRoute)
+app.use('/sync', syncRoute)
+app.use('/statistics', statisticsRoute)
 
 app.listen(3001,()=>{
     console.log('App Listening at 3001')
